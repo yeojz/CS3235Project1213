@@ -1,0 +1,393 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]--> <!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]--> <!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]--> <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  	<title>ProtoAppList - CS3235</title>
+
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link rel="stylesheet" href="../css/bootstrap.min.css">
+  	<link rel="stylesheet" href="../css/bootstrap-responsive.min.css">
+  	<link rel="stylesheet" href="css/style.css">
+
+	
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+
+</head>
+<body><div id="top">
+
+
+	<!-- standard static components-->
+	<div class="navbar">
+  		<div class="navbar-inner">
+  			<div class="container">
+   				<a class="brand" href="#">CS3235 AY12/13 Sem 1 Prototype</a>
+   			</div>
+  		</div>
+	</div>
+
+  <div class="container">
+  	<div id="content" class="span9 offset1">
+
+  	</div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!--dynamic components-->
+
+
+
+
+
+
+  	<script type="text/x-handlebars" data-template-name="start">
+  		<div class="start-btns span7 offset1">
+        <div class="alert alert-error row">
+          <h4>Note!</h4> 
+          <p>This is a prototype, thus the state is not saved.
+          <br />As such, settings will be lost upon browser refresh</p>
+        </div>
+  			<div class="hero-unit row">
+  				<h2>Services and Devices</h2>
+          <p>Set your Services and Devices</p>
+
+  				<button class="btn btn-primary btn-large" {{action "loginServer" target="CS3235App.controls"}}><i class="icon-user icon-white"></i> Enter Services and Devices</button>
+  			</div>
+  			<div class="hero-unit row">
+          <h2>Client</h2>
+  				<p>Act as a client</p>
+
+  				<button class="btn btn-primary btn-large" {{action "loginClient" target="CS3235App.controls"}}><i class="icon-user icon-white"></i> Enter Client</button>
+  			</div>
+
+         
+  		</div>
+  	</script>
+
+
+
+
+
+
+
+
+
+
+
+  	<script type="text/x-handlebars" data-template-name="server">
+      <div id="serverside">
+        <div class="page-header">
+            <h1>Services and Devices <button class="btn btn-primary btn-large" {{action "loginStart" target="CS3235App.controls"}}>Back to Start</button></h1>
+        </div>
+
+
+
+
+        {{#if alertvalue}}
+        <div class="alert row">
+            {{alertvalue}}
+        </div>
+        {{/if}}
+
+        <div class="content">
+
+            <div class="hero-unit" id="seviceArea">
+                <h2>Services</h2>
+                <input type="text" id="newService" placeholder="Add a service" class="span8">
+                <br />
+                <button id="serviceCreate" {{action "serviceCreate" target="CS3235App.controls"}} class="btn btn-primary"><i class="icon-plus icon-white"></i> Create Service</button>
+
+                <div class="generate">
+                    {{#each CS3235App.serviceArr}}
+
+                        <table class="table table-bordered">
+                            
+                            <tr>
+                                <td><strong>Service:</strong> {{ServiceName}}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                      <strong>Service Accounts</strong>
+                                      <br />
+                                      <input type="text" placeholder="Username" class="user span3">
+                                      <input type="password" placeholder="Pass" class="pass span3">
+                                      {{#view CS3235App.addServiceAccount valueBinding="this"}}<i class="icon-plus icon-white"></i> Create Account{{/view}} 
+                                      <div class="name none">{{ServiceName}}</div>
+                                      <div class="userlist">
+
+                                      </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                    {{/each}}
+                </div><!--generate-->
+            </div><!--serviceArea-->
+
+            <div class="clearfix"></div>  
+
+            {{#if alertvalueDevice}}
+            <div class="alert row">
+                {{alertvalueDevice}}
+            </div>
+            {{/if}}
+
+            <div class="hero-unit" id="deviceArea">
+              <h2>Devices</h2>
+              <input type="text" id="newDevice" placeholder="Generate a device" class="span8">
+              <br />
+              <button id="deviceCreate" {{action "deviceCreate" target="CS3235App.controls"}}class="btn btn-primary"><i class="icon-plus icon-white"></i> Generate Device</button>
+
+              <div class="generate">
+                  {{#each CS3235App.deviceArr}}
+
+                      <table class="table table-bordered">
+                          
+                          <tr>
+                              <td><strong>Device:</strong> {{DeviceName}}</td>
+                              <td></td>
+                          </tr>
+                          <!--<tr>
+                              <td colspan="2">
+                                   <input type="text" placeholder="Service" class="deviceService span3">
+                                    {{#view CS3235App.addDeviceAccount valueBinding="this"}}<i class="icon-plus icon-white"></i> Add Service{{/view}} 
+                                    <div class="name none">{{DeviceName}}</div>
+                              </td>
+                          </tr>-->
+                      </table>
+                  {{/each}}
+              </div>
+            </div>
+        </div><!--content-->
+
+      </div>
+  	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  	<script type="text/x-handlebars" data-template-name="client">
+
+      <div id="clientside">
+        <div class="page-header">
+            <h1>Client <button class="btn btn-primary btn-large" {{action "loginStart" target="CS3235App.controls"}}>Back to Start</button></h1>
+        </div>
+
+     
+        <ul class="nav nav-tabs">
+            <li><a href="#clientSetupArea">Client - Setup</a></li>
+            <li><a href="#clientAuthArea">Client - Authentication</a></li>
+        </ul>
+
+        {{#if alertvalue}}
+        <div class="alert row">
+            {{alertvalue}}
+        </div>
+        {{/if}}
+
+        <div class="content">
+      
+
+            <div class="hero-unit" id="clientSetupArea">
+                <h2>Client - Setup Process</h2>
+                <table class="table table-bordered">
+                  <tr>
+                    <td>Step 1: <strong>Select Service</strong></td>
+                    <td>
+                      <select id="serviceList">
+                          <option>--</option>
+                          {{#each CS3235App.serviceArr}}
+                            <option>{{ServiceName}}</option>
+                          {{/each}}
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Step 2: <strong>Select Device</strong></td>
+                    <td>
+                      <select id="deviceList">
+                            <option>--</option>
+                          {{#each CS3235App.deviceArr}}
+                            <option>{{DeviceName}}</option>
+                          {{/each}}
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Step 3: <strong>Enter a Service Account</strong></td>
+                    <td>
+                          User: <input type="text" placeholder="Account Username" class="span3" id="SAUser">
+                          <!--<br />Pass <input type="password" placeholder="Account Password" class="span3" id="SAPass">-->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Step 4: <strong>Setup</strong></td>
+                    <td>
+                      <button id="setupProcess" {{action "setupProcess" target="CS3235App.controls"}}class="btn btn-primary"><i class="icon-plus icon-white"></i> Setup </button>
+
+                      <div class="update-canvas span6">
+
+                      </div>
+                    </td>
+                  </tr> 
+
+                </table>
+
+            </div><!--end setup-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="hero-unit" id="clientAuthArea">
+              <h2>Client - Authentication Process</h2>
+
+
+              <table class="table table-bordered">
+                <tr>
+                    <td>Step 1: <strong>Select Service</strong></td>
+                     <td>
+                      <select id="auth-serviceList">
+                          <option>--</option>
+                          {{#each CS3235App.serviceArr}}
+                            <option>{{ServiceName}}</option>
+                          {{/each}}
+                      </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                      Step 2: <strong>Select Device</strong>
+                       <br />(Selection of Multiple Devices Allowed)
+                    </td>
+                    <td>
+                      <select id="auth-deviceList" multiple="mutliple">
+                          {{#each CS3235App.deviceArr}}
+                            <option>{{DeviceName}}</option>
+                          {{/each}}
+                      </select>
+                    </td>
+                </tr>                  
+                <tr>
+                    <td>Step 3: <strong>Set Mininum Device</strong></td>
+                    <td>
+                        <select id="auth-minDevCount">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                        </select>   
+                    </td>
+                </tr>
+                <tr>
+                    <td>Step 4: <strong>Enter a Service Account</strong></td>
+                    <td>
+                          User: <input type="text" placeholder="Account Username" class="span3" id="auth-SAUser">
+                          <br />Pass <input type="password" placeholder="Account Password" class="span3" id="auth-SAPass"> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Step 5: <strong>Start Authentication!</strong></td>
+                    <td>
+                      <button id="authProcess" {{action "authProcess" target="CS3235App.controls"}}class="btn btn-primary"><i class="icon-ok icon-white"></i> Authenticate </button>
+                      
+                      <div class="update-canvas span6">
+
+                      </div>
+                    </td>
+                </tr>
+
+
+              </table>
+            </div>
+
+
+        </div><!--end content-->
+
+
+      </div>
+  	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="libs/handlebars-1.0.0.beta.6.js"></script>
+    <script type="text/javascript" src="libs/ember-1.0.pre.min.js"></script>
+
+
+
+    <script type="text/javascript" src="core/device0.2.js"></script>   
+    <script type="text/javascript" src="core/service0.2.js"></script>
+    <script type="text/javascript" src="core/sha256.js"></script>
+
+
+    <script type="text/javascript" src="app.js"></script>
+
+</div></body>
+</html>

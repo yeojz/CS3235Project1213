@@ -1,0 +1,9 @@
+.none {display: none;}
+.generate{margin-top: 3em;}
+
+#clientside .hero-unit,
+#serverside .hero-unit{padding: 1em !important; background: #efefef !important;}
+
+.update-canvas{background: #333; height: 20em; color: #fff; margin: 1em 0; padding: 1em;
+-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+}
