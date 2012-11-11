@@ -290,6 +290,12 @@
 
               <table class="table table-bordered">
                 <tr>
+                    <td><strong>Set Mininum Device (Value)</strong></td>
+                    <td>
+                        <input id="auth-minDevCount" name="auth-minDevCount" value="0" /> 
+                    </td>
+                </tr>
+                <tr>
                     <td>Step 1: <strong>Select Service</strong></td>
                      <td>
                       <select id="auth-serviceList">
@@ -314,37 +320,14 @@
                     </td>
                 </tr>                  
                 <tr>
-                    <td>Step 3: <strong>Set Mininum Device</strong></td>
-                    <td>
-                        <select id="auth-minDevCount">
-                            <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                            <option>13</option>
-                            <option>14</option>
-                            <option>15</option>
-                        </select>   
-                    </td>
-                </tr>
-                <tr>
-                    <td>Step 4: <strong>Enter a Service Account</strong></td>
+                    <td>Step 3: <strong>Enter a Service Account</strong></td>
                     <td>
                           User: <input type="text" placeholder="Account Username" class="span3" id="auth-SAUser">
                           <br />Pass <input type="password" placeholder="Account Password" class="span3" id="auth-SAPass"> 
                     </td>
                 </tr>
                 <tr>
-                    <td>Step 5: <strong>Start Authentication!</strong></td>
+                    <td>Step 4: <strong>Start Authentication!</strong></td>
                     <td>
                       <button id="authProcess" {{action "authProcess" target="CS3235App.controls"}}class="btn btn-primary"><i class="icon-ok icon-white"></i> Authenticate </button>
                       

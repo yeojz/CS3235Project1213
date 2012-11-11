@@ -184,40 +184,52 @@ CS3235App.controls = Ember.Object.create({
 
 		var user = $("#auth-SAUser").val(); 
 		var pass = $("#auth-SAPass").val();
-		var count = $("#auth-minDevCount option:selected").text()
+		var count = $("#auth-minDevCount").val()
 		var service = CS3235App.serviceArr.getService(serviceName)
 
-		
+
+
+
+
 		if(service != -1 && user){
 
-			canvas.append("<br />User Selected: " + user)
+			var devCountMsg = service.SetMinimumDeviceCount(user, count);
+			canvas.append("<br />" + devCountMsg);
 
-			for (i = 0; i < deviceName.length; i++){
-		
-				var item = CS3235App.deviceArr.getDevice(deviceName[i])
+			if (devCountMsg.substring(0,5) != 'Error'){
+
+
+				canvas.append("<br />User Selected: " + user)
+
+				for (i = 0; i < deviceName.length; i++){
 			
-				if (item != -1){
-					oneTimePass.push(item.GetServicePasscode(service.ServiceName))
-					canvas.append("<br />One Time Password Generated")
+					var item = CS3235App.deviceArr.getDevice(deviceName[i])
+				
+					if (item != -1){
+						oneTimePass.push(item.GetServicePasscode(service.ServiceName))
+						canvas.append("<br />One Time Password Generated using: \"" + item.DeviceName + "\"")
+					}
+				}
+
+
+				if (oneTimePass.length == deviceName.length  && pass && count){
+
+					
+					
+					var rs = service.Authenticate(user, pass, oneTimePass)
+					if(rs){
+						canvas.append("<br />" + rs)
+					}else{
+						canvas.append("<br />Oops...An error has occurred")
+					}
+					
+				
 				}
 			}
-
-
-			if (oneTimePass.length == deviceName.length  && pass && count){
-
-				service.SetMinimumDeviceCount(user, count);
-				canvas.append("<br />Minimum Device for "+service.ServiceName+" set to " + count)
-			
-				var rs = service.Authenticate(user, pass, oneTimePass)
-				if(rs){
-					canvas.append("<br />" + rs)
-				}else{
-					canvas.append("<br />Oops...An error has occurred")
-				}
-			}
-			canvas.append("<br />End.<br />----<br />")
-
+		} else {
+			canvas.append("<br />Error: Could not get service and/or user")
 		}
+		canvas.append("<br />End.<br />----<br />")
 
 	},
 

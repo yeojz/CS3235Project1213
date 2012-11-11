@@ -79,20 +79,20 @@ this.DeleteServiceAccount = function(userid){
 this.SetMinimumDeviceCount = function(userid, minimumDeviceCount){
 	//	Check if user exist
 	if (!this.Users[userid])
-		return "Hmm, it seems like, " + userid + ", does not exist in " + this.ServiceName + "'s records (yet)!";
+		return "Error: Hmm, it seems like, " + userid + ", does not exist in " + this.ServiceName + "'s records (yet)!";
 	
 	//	Check if minimumDeviceCount is a number
 	if (isNaN(minimumDeviceCount))
-		return minimumDeviceCount + " is obviously not a number..";
+		return "Error: " + minimumDeviceCount + " is obviously not a number..";
 		
 	//	Check if minimumDeviceCount is non-negative
 	if (parseInt(minimumDeviceCount) < 0)
-		return minimumDeviceCount + " is negative.. (and it shouldn't)";
+		return "Error: " + minimumDeviceCount + " is negative.. (and it shouldn't)";
 		
 	//	Check if minimumDeviceCount is not more than user's devices count
 	var myDevicesCount = this.Users[userid]['DevicesCount'];
 	if (minimumDeviceCount > myDevicesCount)
-		return minimumDeviceCount + "? But you only have " + myDevicesCount + " devices added..";
+		return "Error: " + minimumDeviceCount + "? But you only have " + myDevicesCount + " devices added..";
 	
 	//	Success
 	this.Users[userid]['MinimumDeviceCount'] = parseInt(minimumDeviceCount);
@@ -146,7 +146,7 @@ this.Authenticate = function(userid, password, oneTimePasscodes){
 	
 	var required = this.Users[userid]['MinimumDeviceCount'];
 	if (currentValidPasscodes < required)
-		return "Either the username or password or passcodes are invalid. [Hint... " + "Only " + currentValidPasscodes + " are valid. Require " + required + "...";
+		return "Either the username or password or passcodes are invalid. [Hint... " + "Only " + currentValidPasscodes + " is/are valid. Require " + required + "...";
 	
 	//	Success
 	return "Its complicated... but you are logged in anyway!";
